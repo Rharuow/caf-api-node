@@ -13,7 +13,8 @@ export class CreateVisitant1626714585406 implements MigrationInterface {
                 },
                 {
                     name: 'cpf',
-                    type: 'varchar'
+                    type: 'varchar',
+                    isUnique: true
                 },
                 {
                     name: 'last_login',
