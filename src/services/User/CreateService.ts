@@ -1,21 +1,34 @@
 import { getCustomRepository } from "typeorm";
-import { UserRepository } from "../../respositories/UserRepository";
+import { UserRepository } from "../../repositories/UserRepository";
+import cloudinary from "../../../cloudinary";
 
 
-interface IUser {
+export interface IUser {
     username: string
     email: string
-    avatar: string
+    avatarFile: File
 }
 
-export class User {
-    async execute({avatar, email, username}: IUser) {
+class User {
+    async execute({avatarFile, email, username}: IUser) {
         const userRepository = getCustomRepository(UserRepository)
 
-        const user = await userRepository.create({avatar, email, username})
+        try {
+            // const avatar = await cloudinary.upload(
+            //     avatarFile("photo", { maxSize: "1mb" })
+            //   );
 
-        await userRepository.save(user)
+            // const user = await userRepository.create({avatar: avatar.url, email, username})
 
-        return user
+            // await userRepository.save(user)
+
+            return username
+        } catch (error) {
+            return error.message
+        }
+
+        
     }
 }
+
+export default User
