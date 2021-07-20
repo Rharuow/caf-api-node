@@ -25,8 +25,10 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date
 
-  @OneToMany(() => Access, access => access.user)
-  access: Access
+  @OneToMany(() => Access, access => access.user, {
+    onDelete: 'CASCADE'
+  })
+  accesses: Access[]
 
   constructor() {
     if(!this.id) this.id = uuid()
