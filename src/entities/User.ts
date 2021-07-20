@@ -5,25 +5,25 @@ import { Access } from "./Access";
 @Entity('users')
 export class User {
   @PrimaryColumn()
-  readonly id: string
+  readonly id: string;
 
   @Column()
-  username: string
+  username: string;
 
   @Column()
-  email: string
+  email: string;
 
   @Column()
-  password: string
+  password: string;
 
   @Column()
-  avatar: string
+  avatar: string;
 
   @CreateDateColumn()
-  created_at: Date
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at: Date
+  updated_at: Date;
 
   @OneToMany(() => Access, access => access.user, {
     onDelete: 'CASCADE'
