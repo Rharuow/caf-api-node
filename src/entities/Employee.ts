@@ -5,26 +5,26 @@ import { User } from "./User";
 @Entity('employees')
 export class Employee {
     @PrimaryColumn()
-    readonly id: string
+    readonly id: string;
 
     @Column()
-    registration: string
+    registration: string;
 
     @Column()
-    last_login: Date
+    last_login: Date;
 
     @CreateDateColumn()
-    created_at: Date
+    created_at: Date;
 
     @UpdateDateColumn()
-    updated_at: Date
+    updated_at: Date;
 
     @Column()
-    user_id: string
+    user_id: string;
 
     @JoinColumn({name: 'user_id'})
     @OneToOne(() => User)
-    user: User
+    user: User;
     
     constructor() {
         if(!this.id) this.id = uuid()
