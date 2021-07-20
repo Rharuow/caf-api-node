@@ -1,8 +1,8 @@
-import { Column, CreateDateColumn, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User";
 
 
-
+@Entity('accesses')
 export class Access {
     @PrimaryColumn()
     readonly id: string
@@ -29,6 +29,8 @@ export class Access {
     user_id: string
 
     @JoinColumn({name: 'user_id'})
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, {
+        onDelete: 'CASCADE',
+    })
     user: User
 }
