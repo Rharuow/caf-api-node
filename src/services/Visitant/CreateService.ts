@@ -11,6 +11,11 @@ export class CreateService {
     async execute({cpf, user_id} : IVisitant){
         const visitantRepository = getCustomRepository(VisitantRepository)
 
-        const visitant = await visitantRepository.find({where: {cpf}})
+        const visitant = await visitantRepository.create({cpf, user_id})
+
+        await visitantRepository.save(visitant)
+
+        return visitant
+
     }
 }
