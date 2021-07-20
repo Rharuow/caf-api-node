@@ -38,9 +38,12 @@ export class CreateVisitant1626714585406 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
+                    name: 'FKUserVisitant',
                     columnNames: ['user_id'],
                     referencedColumnNames: ['id'],
-                    referencedTableName: 'users'
+                    referencedTableName: 'users',
+                    onDelete: 'CASCADE',
+                    onUpdate: 'SET NULL'
                 }
             ]
         }))
