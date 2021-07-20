@@ -5,22 +5,22 @@ import { User } from "./User";
 @Entity('visitants')
 export class Visitant {
     @PrimaryColumn()
-    readonly id: string
+    readonly id: string;
 
     @Column()
-    cpf: string
+    cpf: string;
 
     @Column()
-    last_login: Date
+    last_login: Date;
 
     @CreateDateColumn()
-    created_at: Date
+    created_at: Date;
 
     @UpdateDateColumn()
-    updated_at: Date
+    updated_at: Date;
 
     @Column()
-    user_id: string
+    user_id: string;
 
     @JoinColumn({name: 'user_id'})
     @OneToOne(() => User)
