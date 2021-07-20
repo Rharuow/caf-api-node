@@ -4,7 +4,7 @@ export class CreateAccess1626714758986 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: 'access',
+            name: 'accesses',
             columns: [
                 {
                     name: 'id',
@@ -13,7 +13,8 @@ export class CreateAccess1626714758986 implements MigrationInterface {
                 },
                 {
                     name: 'alphanumeric',
-                    type: 'varchar'
+                    type: 'varchar',
+                    isUnique: true
                 },
                 {
                     name: 'user_id',
@@ -47,15 +48,19 @@ export class CreateAccess1626714758986 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
+                    name: 'FKUserAccess',
                     columnNames: ['user_id'],
                     referencedColumnNames: ['id'],
-                    referencedTableName: 'users'
+                    referencedTableName: 'users',
+                    onDelete: 'CASCADE',
+                    onUpdate: 'SET NULL'
                 }
             ]
         }))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable('accesses')
     }
 
 }
