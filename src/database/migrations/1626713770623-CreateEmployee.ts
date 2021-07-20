@@ -38,9 +38,12 @@ export class CreateEmployee1626713770623 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
+                    name: 'FKUserEmployee',
                     columnNames: ['user_id'],
                     referencedColumnNames: ['id'],
-                    referencedTableName: 'users'
+                    referencedTableName: 'users',
+                    onDelete: 'CASCADE',
+                    onUpdate: 'SET NULL'
                 }
             ]
         }))
