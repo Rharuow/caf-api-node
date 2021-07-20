@@ -1,21 +1,31 @@
 import { getCustomRepository } from "typeorm";
-import { VisitantRepository } from "../../respositories/VisitantRepository";
 
+import { VisitantRepository } from "../../repositories/VisitantRepository";
+import UserCreateService, { IUser } from '../User/CreateService'
 
 interface IVisitant {
-    cpf: string
-    user_id: string
+  cpf: string
+  user: IUser
 }
 
-export class CreateService {
-    async execute({cpf, user_id} : IVisitant){
-        const visitantRepository = getCustomRepository(VisitantRepository)
+class CreateService {
+  async execute({cpf, user} : IVisitant){
+    const visitantRepository = getCustomRepository(VisitantRepository)
 
-        const visitant = await visitantRepository.create({cpf, user_id})
+    try {
+      const userCreateService = new UserCreateService()
 
-        await visitantRepository.save(visitant)
+      // const userCreated = await userCreateService.execute({username: user.username, avatar: user.avatar, email: user.email})
 
-        return visitant
+      // const visitant = await visitantRepository.create({cpf, user_id: userCreated.id})
 
+      // await visitantRepository.save(visitant)
+
+      // return visitant
+    } catch (error) {
+        return error.message
     }
+  }
 }
+
+export default CreateService
