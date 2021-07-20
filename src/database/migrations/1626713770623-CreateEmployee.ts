@@ -13,7 +13,8 @@ export class CreateEmployee1626713770623 implements MigrationInterface {
                 },
                 {
                     name: 'registration',
-                    type: 'varchar'
+                    type: 'varchar',
+                    isUnique: true
                 },
                 {
                     name: 'last_login',
