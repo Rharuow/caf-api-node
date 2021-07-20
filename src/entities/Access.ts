@@ -5,28 +5,28 @@ import { User } from "./User";
 @Entity('accesses')
 export class Access {
     @PrimaryColumn()
-    readonly id: string
+    readonly id: string;
 
     @Column()
-    alphanumeric: string
+    alphanumeric: string;
 
     @Column()
-    checkin: Date
+    checkin: Date;
 
     @Column()
-    checkout: Date
+    checkout: Date;
 
     @Column()
-    is_active: boolean
+    is_active: boolean;
 
     @CreateDateColumn()
-    created_at: Date
+    created_at: Date;
 
     @UpdateDateColumn()
-    updated_at: Date
+    updated_at: Date;
 
     @Column()
-    user_id: string
+    user_id: string;
 
     @JoinColumn({name: 'user_id'})
     @ManyToOne(() => User, {
