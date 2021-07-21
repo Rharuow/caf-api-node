@@ -15,13 +15,13 @@ class CreateService {
     try {
       const userCreateService = new UserCreateService()
 
-      // const userCreated = await userCreateService.execute({username: user.username, avatar: user.avatar, email: user.email})
+      const userCreated = await userCreateService.execute({username: user.username, avatar: user.avatar, email: user.email})
 
-      // const visitant = await visitantRepository.create({cpf, user_id: userCreated.id})
+      const visitant = visitantRepository.create({cpf, user_id: userCreated.id})
 
-      // await visitantRepository.save(visitant)
+      await visitantRepository.save(visitant)
 
-      // return visitant
+      return visitant
     } catch (error) {
         return error.message
     }
