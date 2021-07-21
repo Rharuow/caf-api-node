@@ -12,7 +12,7 @@ class CreateService {
     const employeeRepository = getCustomRepository(EmployeeRepository)
 
     try {
-      const employee = await employeeRepository.create({registration, user_id})
+      const employee = employeeRepository.create({registration, user_id})
 
       await employeeRepository.save(employee)
 

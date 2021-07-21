@@ -12,7 +12,7 @@ class CreateService {
   async execute({alphanumeric, user_id}: IAccess) {
     const accessRepository = getCustomRepository(AccessRepository)
     try {
-      const access = await accessRepository.create({alphanumeric, user_id})
+      const access = accessRepository.create({alphanumeric, user_id})
   
       await accessRepository.save(access)
   
