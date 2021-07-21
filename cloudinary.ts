@@ -11,9 +11,9 @@ cloudinary.config({
 
 export = {
   upload: async (file) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<{status: boolean, url: string}>(async (resolve, reject) => {
       try {
-        let response = await cloudinary.uploader.upload(file.tmpPath, {
+        const response = await cloudinary.uploader.upload(file.path, {
           folder: "avatar",
         });
 
@@ -23,4 +23,4 @@ export = {
       }
     });
   },
-};
+}; 
