@@ -1,34 +1,28 @@
 import { getCustomRepository } from "typeorm";
+import rimraf from "rimraf";
 import { UserRepository } from "../../repositories/UserRepository";
-import cloudinary from "../../../cloudinary";
-
 
 export interface IUser {
-    username: string
-    email: string
-    avatarFile: File
+	username: string
+	email: string
+	avatar: string
 }
 
 class User {
-    async execute({avatarFile, email, username}: IUser) {
-        const userRepository = getCustomRepository(UserRepository)
+	async execute({avatar, email, username}: IUser) {
+		const userRepository = getCustomRepository(UserRepository)
 
-        try {
-            // const avatar = await cloudinary.upload(
-            //     avatarFile("photo", { maxSize: "1mb" })
-            //   );
+		try {
+			const user = userRepository.create({avatar, email, username})
+			await userRepository.save(user)
 
-            // const user = await userRepository.create({avatar: avatar.url, email, username})
+			rimraf('../../uploads', (err) => {console.log(" ERROR =  ",err.message)})
 
-            // await userRepository.save(user)
-
-            return username
-        } catch (error) {
-            return error.message
-        }
-
-        
-    }
+			return user
+		} catch (error) {
+			return error.message
+		}
+	}
 }
 
 export default User
