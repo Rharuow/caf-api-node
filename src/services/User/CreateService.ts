@@ -1,5 +1,4 @@
 import { getCustomRepository } from "typeorm";
-import rimraf from "rimraf";
 import { UserRepository } from "../../repositories/UserRepository";
 
 export interface IUser {
