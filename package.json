@@ -19,7 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "pg": "^8.6.0",
-    "rimraf": "^3.0.2",
+    "streamifier": "^0.1.1",
     "typeorm": "^0.2.34",
     "uuid": "^8.3.2"
   },
@@ -30,7 +30,7 @@
     "@types/jsonwebtoken": "^8.5.4",
     "@types/multer": "^1.4.7",
     "@types/pg": "^8.6.1",
-    "@types/rimraf": "^3.0.1",
+    "@types/streamifier": "^0.1.0",
     "@types/uuid": "^8.3.1",
     "ts-node-dev": "^1.1.8",
     "tslint": "^6.1.3",

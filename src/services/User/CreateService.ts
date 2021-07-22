@@ -15,9 +15,6 @@ class User {
 		try {
 			const user = userRepository.create({avatar, email, username})
 			await userRepository.save(user)
-
-			rimraf('../../uploads', (err) => {console.log(" ERROR =  ",err.message)})
-
 			return user
 		} catch (error) {
 			return error.message
