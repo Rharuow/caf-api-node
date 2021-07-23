@@ -1,50 +1,50 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateUsers1626707621842 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
+        name: "users",
+        columns: [
+          {
+            name: "id",
+            type: "uuid",
+            isPrimary: true,
+          },
+          {
+            name: "username",
+            type: "varchar",
+            isUnique: true,
+          },
+          {
+            name: "email",
+            type: "varchar",
+            isUnique: true,
+          },
+          {
+            name: "password",
+            type: "varchar",
+          },
+          {
+            name: "avatar",
+            type: "varchar",
+          },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
+          },
+          {
+            name: "updated_at",
+            type: "timestamp",
+            default: "now()",
+          },
+        ],
+      })
+    );
+  }
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.createTable( new Table({
-            name: 'users',
-            columns: [
-                {
-                    name: 'id',
-                    type: 'uuid',
-                    isPrimary: true
-                },
-                {
-                    name: 'username',
-                    type: 'varchar',
-                    isUnique: true
-                },
-                {
-                    name: 'email',
-                    type: 'varchar',
-                    isUnique: true
-                },
-                {
-                    name: 'password',
-                    type: 'varchar'
-                },
-                {
-                    name: 'avatar',
-                    type: 'varchar'
-                },
-                {
-                    name: 'created_at',
-                    type: 'timestamp',
-                    default: 'now()'
-                },
-                {
-                    name: 'updated_at',
-                    type: 'timestamp',
-                    default: 'now()'
-                }
-            ]
-        }))
-    }
-
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('users')
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable("users");
+  }
 }

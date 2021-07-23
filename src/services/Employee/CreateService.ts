@@ -1,29 +1,33 @@
-
-import { getCustomRepository } from 'typeorm';
-import { EmployeeRepository } from '../../repositories/EmployeeRepository';
+import { getCustomRepository } from "typeorm";
+import { EmployeeRepository } from "../../repositories/EmployeeRepository";
+import UserCreateService, { IUser } from "../User/CreateService";
 
 interface IEmployee {
-  registration: string
-  user_id: string
+  registration: string;
+  userParams: IUser;
 }
 
 class CreateService {
-  async execute({registration, user_id}: IEmployee){
-    const employeeRepository = getCustomRepository(EmployeeRepository)
+  async execute({ registration, userParams }: IEmployee) {
+    const employeeRepository = getCustomRepository(EmployeeRepository);
 
     try {
-      const employee = employeeRepository.create({registration, user_id})
+      const userService = new UserCreateService();
 
-      await employeeRepository.save(employee)
+      const user = await userService.execute(userParams);
 
-      return employee
+      const employee = employeeRepository.create({
+        registration,
+        user_id: user.id,
+      });
+
+      await employeeRepository.save(employee);
+
+      return employee;
     } catch (error) {
-      return error.message
+      return error.message;
     }
-
-    
-
   }
 }
 
-export default CreateService
+export default CreateService;

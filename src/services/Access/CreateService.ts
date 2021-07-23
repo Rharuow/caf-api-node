@@ -1,26 +1,24 @@
-
-import { getCustomRepository } from 'typeorm';
-import { AccessRepository } from '../../repositories/AccessRepository';
+import { getCustomRepository } from "typeorm";
+import { AccessRepository } from "../../repositories/AccessRepository";
 
 interface IAccess {
-  alphanumeric: string
-  user_id: string
-
+  alphanumeric: string;
+  user_id: string;
 }
 
 class CreateService {
-  async execute({alphanumeric, user_id}: IAccess) {
-    const accessRepository = getCustomRepository(AccessRepository)
+  async execute({ alphanumeric, user_id }: IAccess) {
+    const accessRepository = getCustomRepository(AccessRepository);
     try {
-      const access = accessRepository.create({alphanumeric, user_id})
-  
-      await accessRepository.save(access)
-  
-      return access
+      const access = accessRepository.create({ alphanumeric, user_id });
+
+      await accessRepository.save(access);
+
+      return access;
     } catch (error) {
-      return error.message
+      return error.message;
     }
   }
 }
 
-export default CreateService
+export default CreateService;

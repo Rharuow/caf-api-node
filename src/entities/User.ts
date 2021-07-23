@@ -1,8 +1,15 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { v4 as uuid } from 'uuid'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { v4 as uuid } from "uuid";
 import { Access } from "./Access";
 
-@Entity('users')
+@Entity("users")
 export class User {
   @PrimaryColumn()
   readonly id: string;
@@ -25,13 +32,12 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Access, access => access.user, {
-    onDelete: 'CASCADE'
+  @OneToMany(() => Access, (access) => access.user, {
+    onDelete: "CASCADE",
   })
-  accesses: Access[]
+  accesses: Access[];
 
   constructor() {
-    if(!this.id) this.id = uuid()
+    if (!this.id) this.id = uuid();
   }
-  
 }
