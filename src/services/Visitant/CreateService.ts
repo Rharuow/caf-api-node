@@ -12,28 +12,25 @@ class CreateService {
   async execute({ cpf, user }: IVisitant) {
     const visitantRepository = getCustomRepository(VisitantRepository);
 
-    try {
-      const userCreateService = new UserCreateService();
+    const userCreateService = new UserCreateService();
 
-      const userCreated = await userCreateService.execute({
-        username: user.username,
-        avatar: user.avatar,
-        email: user.email,
-      });
+    const userCreated = await userCreateService.execute({
+      username: user.username,
+      avatar: user.avatar,
+      email: user.email,
+      role: user.role
+    });
 
-      console.log("userCreated = ", userCreated);
+    if(!userCreated.status.success) throw new Error(userCreated.status.message)
 
-      const visitant = visitantRepository.create({
-        cpf,
-        user_id: userCreated.id,
-      });
+    const visitant = visitantRepository.create({
+      cpf,
+      user_id: userCreated.id,
+    });
 
-      await visitantRepository.save(visitant);
+    await visitantRepository.save(visitant);
 
-      return visitant;
-    } catch (error) {
-      return error.message;
-    }
+    return visitant;
   }
 }
 
