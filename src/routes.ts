@@ -11,7 +11,7 @@ const router = Router();
 const createVisitantController = new CreateVisitantController();
 
 router.post(
-  "/visitants",
+  "/visitant",
   upload.single("photo"),
   createVisitantController.handle
 );
