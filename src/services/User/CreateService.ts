@@ -1,24 +1,51 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, QueryFailedError } from "typeorm";
 import { UserRepository } from "../../repositories/UserRepository";
+import { sendConfirmationToken } from "../utils/sendgrid";
 
 export interface IUser {
   username: string;
   email: string;
   avatar: string;
+  role: string
 }
 
 class User {
-  async execute({ avatar, email, username }: IUser) {
+
+  private generateConfirmationToken(): string {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < 8; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+      charactersLength));
+    }
+   return result;
+  }
+
+  async execute({ avatar, email, username, role }: IUser) {
     const userRepository = getCustomRepository(UserRepository);
 
+    const confirmation_token = this.generateConfirmationToken()
+
+    const user = userRepository.create({ avatar, email, username, confirmation_token });
+    
     try {
-      const user = userRepository.create({ avatar, email, username });
       await userRepository.save(user);
-      console.log("user = ", user);
-      return user;
+      
+      await sendConfirmationToken({code: confirmation_token, email, role, username})
+
+      return {...user, status: {
+        success: true, 
+        message: 'User saved successfully'
+      }};
     } catch (error) {
-      return error.message;
+      if (error instanceof QueryFailedError) return {...user, status: {
+        success: false, 
+        message: 'Users already exists'
+      }}
     }
+
+    
   }
 }
 
