@@ -15,7 +15,7 @@ export class AlterConstrainPasswordUser1626961638558
     await queryRunner.changeColumn(
       "users",
       "password",
-      new TableColumn({ name: "password", type: "varchar" })
+      new TableColumn({ name: "password", type: "varchar", isNullable: true })
     );
   }
 }
