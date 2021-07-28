@@ -4,29 +4,37 @@ import UserCreateService, { IUser } from "../User/CreateService";
 
 interface IEmployee {
   registration: string;
-  userParams: IUser;
+  user: IUser;
 }
 
 class CreateService {
-  async execute({ registration, userParams }: IEmployee) {
+  async execute({ registration, user }: IEmployee) {
     const employeeRepository = getCustomRepository(EmployeeRepository);
 
-    try {
-      const userService = new UserCreateService();
+    const userCreateService = new UserCreateService();
 
-      const user = await userService.execute(userParams);
+    const userCreated = await userCreateService.execute({
+      username: user.username,
+      avatar: user.avatar,
+      email: user.email,
+      role: user.role,
+    });
 
-      const employee = employeeRepository.create({
-        registration,
-        user_id: user.id,
-      });
+    if (!userCreated.status.success)
+      throw new Error(userCreated.status.message);
 
-      await employeeRepository.save(employee);
+    const employee = employeeRepository.create({
+      registration,
+      user_id: userCreated.id,
+    });
 
-      return employee;
-    } catch (error) {
-      return error.message;
-    }
+    await employeeRepository.save(employee);
+
+    return {
+      user: {
+        email: userCreated.email,
+      },
+    };
   }
 }
 
