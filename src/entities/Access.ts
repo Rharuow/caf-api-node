@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
+import { v4 as uuid } from "uuid";
 
 @Entity("accesses")
 export class Access {
@@ -40,4 +41,8 @@ export class Access {
     onDelete: "CASCADE",
   })
   user: User;
+
+  constructor() {
+    if (!this.id) this.id = uuid();
+  }
 }
