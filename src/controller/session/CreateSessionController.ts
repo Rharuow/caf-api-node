@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { CreateSEssionService } from "../../services/Session/CreateSessionService";
+import { CreateSessionService } from "../../services/Session/CreateSessionService";
 
 export class CreateSessionController {
   async handle(req: Request, res: Response) {
-    const createSEssionService = new CreateSEssionService();
+    const createSessionService = new CreateSessionService();
 
     try {
-      const user = await createSEssionService.execute(
+      const user = await createSessionService.execute(
         req.body.email,
         req.body.password
       );

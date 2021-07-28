@@ -18,10 +18,11 @@ class CreateService {
       username: user.username,
       avatar: user.avatar,
       email: user.email,
-      role: user.role
+      role: user.role,
     });
 
-    if(!userCreated.status.success) throw new Error(userCreated.status.message)
+    if (!userCreated.status.success)
+      throw new Error(userCreated.status.message);
 
     const visitant = visitantRepository.create({
       cpf,
@@ -30,7 +31,11 @@ class CreateService {
 
     await visitantRepository.save(visitant);
 
-    return visitant;
+    return {
+      user: {
+        email: userCreated.email,
+      },
+    };
   }
 }
 

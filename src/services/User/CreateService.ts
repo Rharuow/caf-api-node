@@ -6,46 +6,60 @@ export interface IUser {
   username: string;
   email: string;
   avatar: string;
-  role: string
+  role: string;
 }
 
 class User {
-
   private generateConfirmationToken(): string {
-    let result           = '';
-    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const charactersLength = characters.length;
-    for ( let i = 0; i < 8; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
-      charactersLength));
+    for (let i = 0; i < 28; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-   return result;
+    return result;
   }
 
   async execute({ avatar, email, username, role }: IUser) {
     const userRepository = getCustomRepository(UserRepository);
 
-    const confirmation_token = this.generateConfirmationToken()
+    const confirmation_token = this.generateConfirmationToken();
 
-    const user = userRepository.create({ avatar, email, username, confirmation_token });
-    
+    const user = userRepository.create({
+      avatar,
+      email,
+      username,
+      confirmation_token,
+    });
+
     try {
       await userRepository.save(user);
-      
-      await sendConfirmationToken({code: confirmation_token, email, role, username})
 
-      return {...user, status: {
-        success: true, 
-        message: 'User saved successfully'
-      }};
+      await sendConfirmationToken({
+        code: confirmation_token,
+        email,
+        role,
+        username,
+      });
+
+      return {
+        ...user,
+        status: {
+          success: true,
+          message: "User saved successfully",
+        },
+      };
     } catch (error) {
-      if (error instanceof QueryFailedError) return {...user, status: {
-        success: false, 
-        message: 'Users already exists'
-      }}
+      if (error instanceof QueryFailedError)
+        return {
+          ...user,
+          status: {
+            success: false,
+            message: "Users already exists",
+          },
+        };
     }
-
-    
   }
 }
 
