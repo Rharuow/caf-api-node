@@ -29,13 +29,19 @@ class CreateService {
       user_id: userCreated.id,
     });
 
-    await visitantRepository.save(visitant);
+    try {
+      await visitantRepository.save(visitant);
 
-    return {
-      user: {
-        email: userCreated.email,
-      },
-    };
+      return {
+        user: {
+          email: userCreated.email,
+        },
+      };
+    } catch (error) {
+      throw new Error(
+        "Sorry, we can't create a visitant with your credentials"
+      );
+    }
   }
 }
 

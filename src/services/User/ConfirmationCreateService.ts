@@ -30,7 +30,7 @@ export class ConfirmationCreateService {
         role: role,
       });
     } catch (err) {
-      throw new Error("User not found");
+      throw new Error("Sorry, we can't confirm your signup");
     }
   }
 }

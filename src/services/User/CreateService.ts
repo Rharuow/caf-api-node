@@ -56,7 +56,7 @@ class User {
           ...user,
           status: {
             success: false,
-            message: "Users already exists",
+            message: "Sorry, we can't create a user!",
           },
         };
     }

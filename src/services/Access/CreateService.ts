@@ -23,12 +23,9 @@ class CreateService {
 
       await accessRepository.save(access);
 
-      console.log(access);
-
       return access;
     } catch (error) {
-      console.log(error);
-      return error.message;
+      throw new Error("Sorry we can't create a access!");
     }
   }
 }

@@ -6,6 +6,8 @@ export class CreateSessionController {
   async handle(req: Request, res: Response) {
     const createSessionService = new CreateSessionService();
 
+    console.log(req.body);
+
     try {
       const user = await createSessionService.execute(
         req.body.email,

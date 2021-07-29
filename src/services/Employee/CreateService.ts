@@ -28,13 +28,19 @@ class CreateService {
       user_id: userCreated.id,
     });
 
-    await employeeRepository.save(employee);
+    try {
+      await employeeRepository.save(employee);
 
-    return {
-      user: {
-        email: userCreated.email,
-      },
-    };
+      return {
+        user: {
+          email: userCreated.email,
+        },
+      };
+    } catch (error) {
+      throw new Error(
+        "Sorry, wen can't create a employee with your credentials."
+      );
+    }
   }
 }
 
