@@ -23,6 +23,7 @@ export class CreateSessionService {
       });
 
       return {
+        id: user.id,
         username: user.username,
         photo: user.avatar,
         email: user.email,
