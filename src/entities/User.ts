@@ -29,6 +29,9 @@ export class User {
   @Column()
   avatar: string;
 
+  @Column()
+  role: string;
+
   @CreateDateColumn()
   created_at: Date;
 

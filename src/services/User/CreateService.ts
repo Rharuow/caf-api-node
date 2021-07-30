@@ -31,6 +31,7 @@ class User {
       email,
       username,
       confirmation_token,
+      role,
     });
 
     try {
