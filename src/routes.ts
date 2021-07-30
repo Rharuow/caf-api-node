@@ -8,13 +8,14 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 import { CreateVisitantController } from "./controller/visitant/CreateVisitantController";
+import { redirectAuthUser } from "./middlewares/redirectAuthUser";
 
 const router = Router();
 
 const createVisitantController = new CreateVisitantController();
 const createEmployeeCOntroller = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
-const createSessionController = new CreateSessionController();
+const visitantCreateSessionController = new CreateSessionController();
 
 router.post(
   "/visitant",
@@ -28,7 +29,7 @@ router.post(
   createEmployeeCOntroller.handle
 );
 
-router.post("/auth", createSessionController.handle);
+router.post("/auth", redirectAuthUser, visitantCreateSessionController.handle);
 
 router.post("/confirmation", confirmationSignupController.handle);
 
