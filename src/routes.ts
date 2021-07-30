@@ -1,5 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
+import { AddCheckinController } from "./controller/Access/AddCheckinController";
+import { AddCheckoutController } from "./controller/Access/AddCheckoutController";
 import { CreateEmployeeController } from "./controller/employee/CreateEmployeeController";
 import { CreateSessionController } from "./controller/session/CreateSessionController";
 import { ConfirmationSignupController } from "./controller/user/ConfirmationSignupController";
@@ -16,6 +18,8 @@ const createVisitantController = new CreateVisitantController();
 const createEmployeeCOntroller = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
 const visitantCreateSessionController = new CreateSessionController();
+const addCheckinController = new AddCheckinController();
+const addCheckoutController = new AddCheckoutController();
 
 router.post(
   "/visitant",
@@ -30,6 +34,10 @@ router.post(
 );
 
 router.post("/auth", redirectAuthUser, visitantCreateSessionController.handle);
+
+router.post("/checkin", addCheckinController.handle);
+
+router.post("/checkout", addCheckoutController.handle);
 
 router.post("/confirmation", confirmationSignupController.handle);
 
