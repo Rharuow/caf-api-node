@@ -13,7 +13,6 @@ export class AddCheckoutController {
 
       return res.json({ checkout });
     } catch (error) {
-      console.log(error);
       return res.status(401).json({ message: error.message });
     }
   }

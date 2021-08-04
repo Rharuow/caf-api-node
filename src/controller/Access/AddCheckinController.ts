@@ -3,7 +3,6 @@ import { AddCheckinService } from "../../services/Access/AddCheckinService";
 
 export class AddCheckinController {
   async handle(req: Request, res: Response) {
-    console.log(req.body);
     const addCheckinService = new AddCheckinService();
 
     try {

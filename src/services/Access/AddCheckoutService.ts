@@ -23,13 +23,18 @@ export class AddCheckoutService {
 
       await accessRepository.update(
         { user_id: user.id, alphanumeric },
-        { alphanumeric: "invalid", is_active: false, checkout: new Date() }
+        {
+          alphanumeric: `${new Date()}`,
+          is_active: false,
+          checkout: new Date(),
+        }
       );
 
       const newAccess = await createAccessService.execute(user.id);
 
       return newAccess;
     } catch (error) {
+      console.log(error);
       throw new Error("Sorry, impossible to do Checkout ");
     }
   }
