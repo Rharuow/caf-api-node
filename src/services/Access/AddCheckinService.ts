@@ -12,7 +12,12 @@ export class AddCheckinService {
       const user = await getUserService.execute(email);
 
       await accessRepository.findOneOrFail({
-        where: { user_id: user.id, checkin: null },
+        where: {
+          user_id: user.id,
+          checkin: null,
+          alphanumeric,
+          is_active: true,
+        },
       });
 
       await accessRepository.update(
@@ -20,7 +25,8 @@ export class AddCheckinService {
         { checkin: new Date() }
       );
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error);
+      throw new Error("Sorry, couldn't find right params to your access!");
     }
   }
 }
