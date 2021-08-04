@@ -7,7 +7,7 @@ export class GetCodeAccessService {
 
     try {
       const access = await accessRepository.findOneOrFail({
-        where: { user_id },
+        where: { user_id, is_active: true },
       });
 
       return access.alphanumeric;
