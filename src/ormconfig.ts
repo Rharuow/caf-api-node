@@ -13,7 +13,7 @@ console.log("TYPEORM_ENTITIES = ", process.env.TYPEORM_ENTITIES);
 console.log("TYPEORM_MIGRATIONS = ", process.env.TYPEORM_MIGRATIONS);
 
 export default {
-  url: "",
+  url: process.env.DATABASE_URL,
   type: process.env.TYPEORM_CONNECTION,
   host: process.env.TYPEORM_HOST,
   port: process.env.TYPEORM_PORT,
