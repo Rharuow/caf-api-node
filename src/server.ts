@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/v2", router);
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`start server at ${process.env.HOST}:${process.env.PORT}`);
+  console.log(`start server at`);
 });
 
 //TO-DO
