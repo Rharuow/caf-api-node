@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import multer from "multer";
 import { AddCheckinController } from "./controller/Access/AddCheckinController";
 import { AddCheckoutController } from "./controller/Access/AddCheckoutController";
@@ -25,6 +25,10 @@ const visitantCreateSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
 const addCheckoutController = new AddCheckoutController();
 const getAccessCodeController = new GetAccessCodeController();
+
+router.get("/", (req: Request, res: Response) =>
+  res.send("Welcome to version 2 node CAF API")
+);
 
 router.post(
   "/visitant",
