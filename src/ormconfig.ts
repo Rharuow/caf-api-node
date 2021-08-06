@@ -14,6 +14,7 @@ export default {
     migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
     entitiesDir: process.env.TYPEORM_ENTITIES_DIR,
   },
+  ssl: { rejectUnauthorized: false },
   entities: [process.env.TYPEORM_ENTITIES],
   migrations: [process.env.TYPEORM_MIGRATIONS],
 };
