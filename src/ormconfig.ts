@@ -14,7 +14,11 @@ export default {
     migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
     entitiesDir: process.env.TYPEORM_ENTITIES_DIR,
   },
-  ssl: false,
+  ssl: {
+    // DO NOT DO THIS
+    // set up your ca correctly to trust the connection
+    rejectUnauthorized: false,
+  },
   entities: [process.env.TYPEORM_ENTITIES],
   migrations: [process.env.TYPEORM_MIGRATIONS],
 };
