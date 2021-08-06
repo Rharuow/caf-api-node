@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import cloudinary from "../../../cloudinary";
+import cloudinary from "../../cloudinary";
 import CreateService from "../../services/Employee/CreateService";
 
 export class CreateEmployeeController {

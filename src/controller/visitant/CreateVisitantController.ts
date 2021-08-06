@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import cloudinary from "../../../cloudinary";
+import cloudinary from "../../cloudinary";
 import VisitantCreateService from "../../services/Visitant/CreateService";
 
 export class CreateVisitantController {

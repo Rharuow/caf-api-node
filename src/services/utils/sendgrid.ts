@@ -1,13 +1,13 @@
-import sgMail from '@sendgrid/mail'
+import sgMail from "@sendgrid/mail";
 require("dotenv").config();
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 interface IData {
-    email: string
-    username: string
-    code: string
-    role: string
+  email: string;
+  username: string;
+  code: string;
+  role: string;
 }
 
 const sendConfirmationToken = async (data: IData) => {
@@ -28,7 +28,7 @@ const sendConfirmationToken = async (data: IData) => {
     .catch((error) => {
       console.error(error);
     });
-}
+};
 
 const sendCodeAccess = async (data: IData) => {
   const msg = {
@@ -53,6 +53,6 @@ const sendCodeAccess = async (data: IData) => {
     .catch((error) => {
       console.error(error);
     });
-}
+};
 
-export { sendConfirmationToken, sendCodeAccess }
+export { sendConfirmationToken, sendCodeAccess };
