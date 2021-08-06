@@ -1,2 +1,2 @@
-release: ENV_SILENT=true typeorm migration:run --force
+release: ENV_SILENT=true typeorm migration:run
 web: ENV_SILENT=true npm start
