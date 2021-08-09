@@ -3,6 +3,7 @@ import multer from "multer";
 import { AddCheckinController } from "./controller/Access/AddCheckinController";
 import { AddCheckoutController } from "./controller/Access/AddCheckoutController";
 import { GetAccessCodeController } from "./controller/Access/GetAccessCodeController";
+import { GetAccessesController } from "./controller/Access/GetAccessesController";
 import { CreateEmployeeController } from "./controller/employee/CreateEmployeeController";
 import { CreateSessionController } from "./controller/session/CreateSessionController";
 import { ConfirmationSignupController } from "./controller/user/ConfirmationSignupController";
@@ -25,6 +26,7 @@ const visitantCreateSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
 const addCheckoutController = new AddCheckoutController();
 const getAccessCodeController = new GetAccessCodeController();
+const getAccessesController = new GetAccessesController()
 
 router.get("/", (req: Request, res: Response) =>
   res.send("Welcome to version 2 node CAF API")
@@ -51,5 +53,7 @@ router.post("/checkout", hasCheckin, addCheckoutController.handle);
 router.post("/confirmation", confirmationSignupController.handle);
 
 router.get("/access", ensureAuthenticated, getAccessCodeController.handle);
+
+router.get("/access/historic", ensureAuthenticated, getAccessesController.handle)
 
 export default router;
