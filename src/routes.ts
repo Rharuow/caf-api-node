@@ -26,7 +26,7 @@ const visitantCreateSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
 const addCheckoutController = new AddCheckoutController();
 const getAccessCodeController = new GetAccessCodeController();
-const getAccessesController = new GetAccessesController()
+const getAccessesController = new GetAccessesController();
 
 router.get("/", (req: Request, res: Response) =>
   res.send("Welcome to version 2 node CAF API")
@@ -52,8 +52,12 @@ router.post("/checkout", hasCheckin, addCheckoutController.handle);
 
 router.post("/confirmation", confirmationSignupController.handle);
 
-router.get("/access", ensureAuthenticated, getAccessCodeController.handle);
+router.get("/access/code", ensureAuthenticated, getAccessCodeController.handle);
 
-router.get("/access/historic", ensureAuthenticated, getAccessesController.handle)
+router.get(
+  "/access/historic",
+  ensureAuthenticated,
+  getAccessesController.handle
+);
 
 export default router;
