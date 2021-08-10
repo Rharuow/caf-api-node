@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { AccessRepository } from "../../repositories/AccessRepository";
 import { GetUserService } from "../User/GetUserService";
+import { sendCodeAccess } from "../utils/sendgrid";
 import CreateService from "./CreateService";
 
 export class AddCheckoutService {
@@ -31,6 +32,13 @@ export class AddCheckoutService {
       );
 
       const newAccess = await createAccessService.execute(user.id);
+
+      await sendCodeAccess({
+        username: user.username,
+        code: newAccess.alphanumeric,
+        email: user.email,
+        role: user.role,
+      })
 
       return newAccess;
     } catch (error) {
