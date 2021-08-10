@@ -38,12 +38,11 @@ export class AddCheckoutService {
         code: newAccess.alphanumeric,
         email: user.email,
         role: user.role,
-      })
+      });
 
       return newAccess;
     } catch (error) {
-      console.log(error);
-      throw new Error("Sorry, impossible to do Checkout ");
+      throw new Error(`${error.message}: Sorry, impossible to do Checkout `);
     }
   }
 }

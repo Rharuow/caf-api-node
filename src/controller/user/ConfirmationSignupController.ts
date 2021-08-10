@@ -12,7 +12,11 @@ export class ConfirmationSignupController {
         req.body.role
       );
 
-      return res.json({ message: "User cadastrado com sucesso" });
+      return res.json({
+        icon: "success",
+        title: "gratz",
+        text: "user created with success",
+      });
     } catch (error) {
       return res.status(401).json({ message: error.message });
     }

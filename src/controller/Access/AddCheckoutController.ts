@@ -11,9 +11,18 @@ export class AddCheckoutController {
         req.body.code
       );
 
-      return res.json({ checkout });
+      return res.json({
+        icon: "success",
+        title: "Always come back",
+        text: "checkout done",
+        ...checkout,
+      });
     } catch (error) {
-      return res.status(401).json({ message: error.message });
+      return res.status(401).json({
+        icon: "error",
+        title: "error",
+        text: error.message,
+      });
     }
   }
 }

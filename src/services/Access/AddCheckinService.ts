@@ -25,8 +25,9 @@ export class AddCheckinService {
         { checkin: new Date() }
       );
     } catch (error) {
-      console.log(error);
-      throw new Error("Sorry, couldn't find right params to your access!");
+      throw new Error(
+        `${error.message}: Sorry, couldn't find right params to your access!`
+      );
     }
   }
 }
