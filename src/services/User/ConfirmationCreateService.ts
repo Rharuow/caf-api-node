@@ -28,6 +28,7 @@ export class ConfirmationCreateService {
         code: accessCode.alphanumeric,
         email: user.email,
         role: role,
+        user,
       });
     } catch (err) {
       throw new Error("Sorry, we can't confirm your signup");

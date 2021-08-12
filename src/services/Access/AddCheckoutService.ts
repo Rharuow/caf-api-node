@@ -38,6 +38,7 @@ export class AddCheckoutService {
         code: newAccess.alphanumeric,
         email: user.email,
         role: user.role,
+        user,
       });
 
       return newAccess;

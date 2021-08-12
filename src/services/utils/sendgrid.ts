@@ -1,4 +1,9 @@
 import sgMail from "@sendgrid/mail";
+import { getCustomRepository } from "typeorm";
+import { User } from "../../entities/User";
+import { EmployeeRepository } from "../../repositories/EmployeeRepository";
+import { UserRepository } from "../../repositories/UserRepository";
+import { VisitantRepository } from "../../repositories/VisitantRepository";
 require("dotenv").config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -8,6 +13,7 @@ interface IData {
   username: string;
   code: string;
   role: string;
+  user: User;
 }
 
 const sendConfirmationToken = async (data: IData) => {
@@ -18,15 +24,23 @@ const sendConfirmationToken = async (data: IData) => {
     text: `Link para confirmação de senha`,
     html: `<h1>Olá ${data.username}</h1> 
             <p>Clique no link abaixo para o próximo passo do seu cadastro:</p> 
-            <a target="_blank" href='${process.env.WEB_URL}/signup/confirmation?token=${data.code}&role=${data.role}'> Seguir com meu cadastro </a>`,
+            <a target="_blank" href="${process.env.WEB_URL}/signup/confirmation?token=${data.code}&role=${data.role}"> Seguir com meu cadastro </a>`,
   };
   sgMail
     .send(msg)
     .then(() => {
       console.log("Email sent");
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(async (error) => {
+      const userRepository = getCustomRepository(UserRepository);
+      const visitantRepository = getCustomRepository(VisitantRepository);
+      const employeeRepository = getCustomRepository(EmployeeRepository);
+
+      data.role === "visitant"
+        ? await visitantRepository.delete({ user_id: data.user.id })
+        : await employeeRepository.delete({ user_id: data.user.id });
+      await userRepository.delete(data.user.id);
+      throw new Error(`${error.message}`);
     });
 };
 
