@@ -24,7 +24,7 @@ import { redirectAuthUser } from "./middlewares/redirectAuthUser";
 const router = Router();
 
 const createVisitantController = new CreateVisitantController();
-const createEmployeeCOntroller = new CreateEmployeeController();
+const createEmployeeController = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
 const visitantCreateSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
@@ -49,7 +49,7 @@ router.post(
   ensureParamsCreateUser,
   ensureParamsCreateEmployee,
   upload.single("photo"),
-  createEmployeeCOntroller.handle
+  createEmployeeController.handle
 );
 
 router.post(

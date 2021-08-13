@@ -6,10 +6,10 @@ import os from "os";
 require("dotenv").config();
 import "./database";
 
-const options = {
-  uploadDir: os.tmpdir(),
-  autoClean: true,
-};
+// const options = {
+//   uploadDir: os.tmpdir(),
+//   autoClean: true,
+// };
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // parse data with connect-multiparty.
-app.use(formData.parse(options));
+// app.use(formData.parse(options));
 // delete from the request all empty files (size == 0)
 app.use(formData.format());
 // change the file objects to fs.ReadStream

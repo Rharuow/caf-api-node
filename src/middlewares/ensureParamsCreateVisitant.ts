@@ -10,12 +10,7 @@ export function ensureParamsCreateVisitant(
 ) {
   const { cpf } = req.body as { cpf: string };
 
-  console.log(process.env);
-
-  if (cpf && validateCpf(cpf))
-    return process.env.TS_NODE_DEV
-      ? res.send("MIDDLEWARE ensureParamsCreateVisitant")
-      : next();
+  if (cpf && validateCpf(cpf)) return next();
 
   return res.status(400).send("Something wrong");
 }

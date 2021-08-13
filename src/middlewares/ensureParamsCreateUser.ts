@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ReadStream } from "fs";
 import { validateEmail } from "../services/utils/validations";
 
 require("dotenv").config();
@@ -8,18 +9,22 @@ export function ensureParamsCreateUser(
   res: Response,
   next: NextFunction
 ) {
-  const { username, email } = req.body as { username: string; email: string };
+  console.log(req);
+  // const { username, email, photo } = req.body;
 
-  if (
-    username &&
-    email &&
-    username.length > 3 &&
-    username.length < 20 &&
-    validateEmail(email)
-  )
-    return !process.env.TS_NODE_DEV
-      ? res.send("MIDDLEWARE ensureParamsCreateUser")
-      : next();
+  // console.log("username = ", username);
+  // console.log("email = ", email);
+  // console.log("photo = ", photo);
+
+  // if (
+  //   username &&
+  //   email &&
+  //   photo &&
+  //   username.length > 3 &&
+  //   username.length < 20 &&
+  //   validateEmail(email)
+  // )
+  //   return next();
 
   return res.status(400).send("Some Params is worng");
 }

@@ -10,7 +10,7 @@ export class AddCheckinController {
 
       return res.json({
         icon: "success",
-        title: "Welcome to TRTRN-21",
+        title: "Welcome",
         text: "checking done",
       });
     } catch (error) {
