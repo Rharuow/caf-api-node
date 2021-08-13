@@ -24,7 +24,7 @@ export function ensureParamsCreateUser(
   //   username.length < 20 &&
   //   validateEmail(email)
   // )
-  //   return next();
+  return next();
 
-  return res.status(400).send("Some Params is worng");
+  // return res.status(400).send("Some Params is worng");
 }
