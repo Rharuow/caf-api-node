@@ -8,9 +8,17 @@ export class AddCheckinController {
     try {
       await addCheckinService.execute(req.body.email, req.body.code);
 
-      return res.json({ message: "checking done" });
+      return res.json({
+        icon: "success",
+        title: "Welcome",
+        text: "checking done",
+      });
     } catch (error) {
-      return res.status(401).json({ meesage: error.message });
+      return res.status(401).json({
+        icon: "error",
+        title: "error",
+        text: error.message,
+      });
     }
   }
 }

@@ -18,7 +18,9 @@ export async function hasCheckin(
 
     if (access.checkin != null) return next();
 
-    return res.status(401).send("hasn't checking");
+    return res
+      .status(200)
+      .json({ icon: "error", title: "error", text: "hasn't checking" });
   } catch (error) {
     return res.status(500).send(error.message);
   }

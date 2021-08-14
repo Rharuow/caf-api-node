@@ -16,9 +16,6 @@ export async function redirectAuthUser(
       where: { email: req.body.email },
     });
 
-    console.log("role = ", role);
-    console.log("user.role = ", user.role);
-
     if (role !== user.role)
       return res.status(401).json({ message: "Wrong role!" });
 

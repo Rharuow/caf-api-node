@@ -13,6 +13,10 @@ const upload = multer({ storage: storage });
 
 import { CreateVisitantController } from "./controller/visitant/CreateVisitantController";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import { ensureParamsCreateEmployee } from "./middlewares/ensureParamsCreateEmployee";
+import { ensureParamsCreateUser } from "./middlewares/ensureParamsCreateUser";
+import { ensureParamsCreateVisitant } from "./middlewares/ensureParamsCreateVisitant";
+import { ensureParamsSessionCreate } from "./middlewares/ensureParamsSessionCreate";
 import { hasCheckin } from "./middlewares/hasCheckin";
 import { hasNotCheckin } from "./middlewares/hasNotCheckin";
 import { redirectAuthUser } from "./middlewares/redirectAuthUser";
@@ -20,7 +24,7 @@ import { redirectAuthUser } from "./middlewares/redirectAuthUser";
 const router = Router();
 
 const createVisitantController = new CreateVisitantController();
-const createEmployeeCOntroller = new CreateEmployeeController();
+const createEmployeeController = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
 const visitantCreateSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
@@ -34,17 +38,26 @@ router.get("/", (req: Request, res: Response) =>
 
 router.post(
   "/visitant",
+  ensureParamsCreateUser,
+  ensureParamsCreateVisitant,
   upload.single("photo"),
   createVisitantController.handle
 );
 
 router.post(
   "/employee",
+  ensureParamsCreateUser,
+  ensureParamsCreateEmployee,
   upload.single("photo"),
-  createEmployeeCOntroller.handle
+  createEmployeeController.handle
 );
 
-router.post("/auth", redirectAuthUser, visitantCreateSessionController.handle);
+router.post(
+  "/auth",
+  ensureParamsSessionCreate,
+  redirectAuthUser,
+  visitantCreateSessionController.handle
+);
 
 router.post("/checkin", hasNotCheckin, addCheckinController.handle);
 
