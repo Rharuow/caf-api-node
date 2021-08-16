@@ -2,6 +2,7 @@ import { getCustomRepository } from "typeorm";
 
 import { VisitantRepository } from "../../repositories/VisitantRepository";
 import UserCreateService, { IUser } from "../User/CreateService";
+import { validateCpf } from "../utils/validations";
 
 interface IVisitant {
   cpf: string;
@@ -10,6 +11,8 @@ interface IVisitant {
 
 class CreateService {
   async execute({ cpf, user }: IVisitant) {
+    if(validateCpf(cpf)) return {status:  200, message: "registration field invalid!"}
+
     const visitantRepository = getCustomRepository(VisitantRepository);
 
     const userCreateService = new UserCreateService();
@@ -21,8 +24,8 @@ class CreateService {
       role: user.role,
     });
 
-    if (!userCreated.status.success)
-      throw new Error(userCreated.status.message);
+    if (userCreated.response.status != 200 )
+      throw new Error(userCreated.response.message);
 
     const visitant = visitantRepository.create({
       cpf,

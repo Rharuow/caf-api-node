@@ -9,7 +9,7 @@ export function ensureParamsCreateUser(
   res: Response,
   next: NextFunction
 ) {
-  console.log(req);
+  console.log(req.body);
   // const { username, email, photo } = req.body;
 
   // console.log("username = ", username);

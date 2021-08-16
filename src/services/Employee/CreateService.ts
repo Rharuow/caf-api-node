@@ -9,6 +9,8 @@ interface IEmployee {
 
 class CreateService {
   async execute({ registration, user }: IEmployee) {
+    if(registration.length != 12) return {status:  200, message: "registration field invalid!"}
+
     const employeeRepository = getCustomRepository(EmployeeRepository);
 
     const userCreateService = new UserCreateService();
@@ -20,8 +22,8 @@ class CreateService {
       role: user.role,
     });
 
-    if (!userCreated.status.success)
-      throw new Error(userCreated.status.message);
+    if (userCreated.response.status != 200)
+      throw new Error(userCreated.response.message);
 
     const employee = employeeRepository.create({
       registration,

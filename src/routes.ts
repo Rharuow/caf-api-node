@@ -38,16 +38,16 @@ router.get("/", (req: Request, res: Response) =>
 
 router.post(
   "/visitant",
-  ensureParamsCreateUser,
-  ensureParamsCreateVisitant,
+  // ensureParamsCreateUser,
+  // ensureParamsCreateVisitant,
   upload.single("photo"),
   createVisitantController.handle
 );
 
 router.post(
   "/employee",
-  ensureParamsCreateUser,
-  ensureParamsCreateEmployee,
+  // ensureParamsCreateUser,
+  // ensureParamsCreateEmployee,
   upload.single("photo"),
   createEmployeeController.handle
 );
