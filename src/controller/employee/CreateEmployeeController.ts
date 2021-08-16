@@ -17,9 +17,9 @@ export class CreateEmployeeController {
           role: "employee",
         },
       });
-    return res.json({ user: { email: employee.user.email } });
+      return res.json({ user: { email: employee.user.email } });
     } catch (error) {
-      return res.status(400).json({messages: error.message});
+      return res.status(400).json({ messages: error.message });
     }
   }
 }

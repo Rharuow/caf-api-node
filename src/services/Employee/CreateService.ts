@@ -9,7 +9,8 @@ interface IEmployee {
 
 class CreateService {
   async execute({ registration, user }: IEmployee) {
-    if(registration.length != 12) return {status:  200, message: "registration field invalid!"}
+    if (registration.length != 12)
+      return { status: 200, message: "registration field invalid!" };
 
     const employeeRepository = getCustomRepository(EmployeeRepository);
 

@@ -23,7 +23,6 @@ class User {
   }
 
   async execute({ avatar, email, username, role }: IUser) {
-    
     const userRepository = getCustomRepository(UserRepository);
 
     const confirmation_token = this.generateConfirmationToken();
@@ -36,21 +35,25 @@ class User {
       role,
     });
 
-    if(!validateEmail(email)) return {
-      id: user.id,
-      email: user.email,
-      response: {
-        status: 400, message: "email field invalid!"
-      }
-    }
-    
-    if(username.length < 3 || username.length > 20) return {
-      id: user.id,
-      email: user.email,
-      response: {
-        status: 400, message: "username field invalid!"
-      }
-    }
+    if (!validateEmail(email))
+      return {
+        id: user.id,
+        email: user.email,
+        response: {
+          status: 400,
+          message: "email field invalid!",
+        },
+      };
+
+    if (username.length < 3 || username.length > 20)
+      return {
+        id: user.id,
+        email: user.email,
+        response: {
+          status: 400,
+          message: "username field invalid!",
+        },
+      };
 
     try {
       await userRepository.save(user);
