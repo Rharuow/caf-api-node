@@ -3,12 +3,8 @@ import { UserRepository } from "../../repositories/UserRepository";
 import { sendConfirmationToken } from "../utils/sendgrid";
 import { validateEmail } from "../utils/validations";
 
-export interface IUser {
-  username: string;
-  email: string;
-  avatar: string;
-  role: string;
-}
+import { IUserCreateService } from "../../../interfaces";
+import cloudinary from "../../cloudinary";
 
 class User {
   private generateConfirmationToken(): string {
@@ -22,13 +18,15 @@ class User {
     return result;
   }
 
-  async execute({ avatar, email, username, role }: IUser) {
+  async execute({ avatar, email, username, role }: IUserCreateService) {
     const userRepository = getCustomRepository(UserRepository);
 
     const confirmation_token = this.generateConfirmationToken();
 
+    const avatarUploaded = await cloudinary.upload(avatar);
+
     const user = userRepository.create({
-      avatar,
+      avatar: avatarUploaded.url,
       email,
       username,
       confirmation_token,
@@ -74,6 +72,7 @@ class User {
         },
       };
     } catch (error) {
+      console.log(error);
       if (error instanceof QueryFailedError)
         return {
           ...user,
