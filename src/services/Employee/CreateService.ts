@@ -1,10 +1,11 @@
 import { getCustomRepository } from "typeorm";
 import { EmployeeRepository } from "../../repositories/EmployeeRepository";
-import UserCreateService, { IUser } from "../User/CreateService";
+import UserCreateService from "../User/CreateService";
 
+import { IUserCreateService } from "../../../interfaces";
 interface IEmployee {
   registration: string;
-  user: IUser;
+  user: IUserCreateService;
 }
 
 class CreateService {
