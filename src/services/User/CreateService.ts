@@ -4,7 +4,7 @@ import { sendConfirmationToken } from "../utils/sendgrid";
 import { validateEmail } from "../utils/validations";
 
 import { IUserCreateService } from "../../../interfaces";
-import cloudinary from "../../cloudinary";
+import cloudinary from "../../../cloudinary";
 
 class User {
   private generateConfirmationToken(): string {
