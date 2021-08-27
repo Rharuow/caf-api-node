@@ -21,8 +21,6 @@ class App {
     ];
     const corsOptions = {
       origin: function (origin, callback) {
-        console.log("origin = ", origin);
-        console.log("whitelist.indexOf(origin) = ", whitelist.indexOf(origin));
         if (whitelist.indexOf(origin) !== -1) {
           callback(null, true);
         } else {
