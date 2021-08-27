@@ -9,7 +9,7 @@
     "test": "jest",
     "dev": " tsnd --respawn src/server.ts",
     "tsc": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js --config ormconfig.ts",
     "postinstall": "npm run tsc"
   },
