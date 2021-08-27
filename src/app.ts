@@ -15,7 +15,15 @@ class App {
   }
 
   middleWare() {
-    this.app.use(cors());
+    const corsOpts = {
+      origin: "*",
+
+      methods: ["GET", "POST"],
+
+      allowedHeaders: ["Content-Type"],
+    };
+
+    this.app.use(cors(corsOpts));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(formData.format());
