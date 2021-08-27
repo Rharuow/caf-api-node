@@ -15,21 +15,7 @@ class App {
   }
 
   middleWare() {
-    const whitelist = [
-      "http://localhost:3000",
-      "https://caf-next-web.herokuapp.com",
-    ];
-    const corsOptions = {
-      origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-    };
-
-    this.app.use(cors(corsOptions));
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(formData.format());
