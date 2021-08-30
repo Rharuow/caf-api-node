@@ -6,7 +6,7 @@ import { validateEmail } from "../utils/validations";
 import { IUserCreateService } from "../../../interfaces";
 import cloudinary from "../../../cloudinary";
 
-class User {
+class CreateUserService {
   private generateConfirmationToken(): string {
     let result = "";
     const characters =
@@ -85,4 +85,4 @@ class User {
   }
 }
 
-export default User;
+export default CreateUserService;

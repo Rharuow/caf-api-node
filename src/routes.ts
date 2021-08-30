@@ -7,6 +7,7 @@ import { GetAccessesController } from "./controller/Access/GetAccessesController
 import { CreateEmployeeController } from "./controller/employee/CreateEmployeeController";
 import { CreateSessionController } from "./controller/session/CreateSessionController";
 import { ConfirmationSignupController } from "./controller/user/ConfirmationSignupController";
+import DeleteUserController from "./controller/user/DeleteController";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -24,6 +25,7 @@ import { redirectAuthUser } from "./middlewares/redirectAuthUser";
 const router = Router();
 
 const createVisitantController = new CreateVisitantController();
+const deleteUserController = new DeleteUserController();
 const createEmployeeController = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
 const visitantCreateSessionController = new CreateSessionController();
@@ -43,6 +45,8 @@ router.post(
   upload.single("photo"),
   createVisitantController.handle
 );
+
+router.delete("/user", deleteUserController.handle);
 
 router.post(
   "/employee",

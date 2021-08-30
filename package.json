@@ -6,7 +6,9 @@
   "author": "Harysson Soares <haryssonsoares@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "pretest": "NODE_ENV=test psql -U postgres -c 'CREATE DATABASE caf_api_node_test' && yarn typeorm migration:run",
     "test": "NODE_ENV=test jest",
+    "posttest": "NODE_ENV=test psql -U postgres -c 'DROP DATABASE caf_api_node_test'",
     "dev": " tsnd --respawn src/server.ts",
     "tsc": "tsc",
     "start": "node dist/src/server.js",
