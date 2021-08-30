@@ -11,6 +11,8 @@ export default {
   password: process.env.TYPEORM_PASSWORD,
   database: process.env.TYPEORM_DATABASE,
   synchronize: process.env.TYPEORM_SYNCHRONIZE,
+  dropSchema: true,
+  migrationsRun: true,
   logging: false,
   cli: {
     migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
