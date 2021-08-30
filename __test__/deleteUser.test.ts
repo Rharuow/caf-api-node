@@ -4,6 +4,7 @@ import app from "../src/app";
 import "../src/database";
 
 test("should delete user and return 200 status", async () => {
+  console.log(process.env.TYPEORM_DATABASE);
   const response = await request(app)
     .delete("/v2/user")
     .set("Content-Type", "application/json")

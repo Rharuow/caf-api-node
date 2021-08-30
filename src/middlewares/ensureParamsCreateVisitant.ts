@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { validateCpf } from "../services/utils/validations";
 
-require("dotenv").config();
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 export function ensureParamsCreateVisitant(
   req: Request,

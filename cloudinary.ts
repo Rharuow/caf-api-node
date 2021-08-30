@@ -1,6 +1,8 @@
 import cloudinary from "cloudinary";
 import streamifier from "streamifier";
-require("dotenv").config();
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

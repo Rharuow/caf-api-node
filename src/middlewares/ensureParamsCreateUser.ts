@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { ReadStream } from "fs";
 import { validateEmail } from "../services/utils/validations";
 
-require("dotenv").config();
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 export function ensureParamsCreateUser(
   req: Request,

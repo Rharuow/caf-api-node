@@ -54,15 +54,17 @@ class CreateUserService {
       };
 
     try {
-      await userRepository.save(user);
+      const userSaved = await userRepository.save(user);
 
-      await sendConfirmationToken({
-        code: confirmation_token,
-        email,
-        role,
-        username,
-        user,
-      });
+      if (userSaved) {
+        await sendConfirmationToken({
+          code: confirmation_token,
+          email,
+          role,
+          username,
+          user,
+        });
+      }
 
       return {
         ...user,

@@ -9,10 +9,12 @@
     "pretest": "NODE_ENV=test psql -U postgres -c 'CREATE DATABASE caf_api_node_test' && yarn typeorm migration:run",
     "test": "NODE_ENV=test jest",
     "posttest": "NODE_ENV=test psql -U postgres -c 'DROP DATABASE caf_api_node_test'",
+    "migrate": " ts-node ./node_modules/typeorm/cli.js migration:run",
     "dev": " tsnd --respawn src/server.ts",
     "tsc": "tsc",
     "start": "node dist/src/server.js",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js --config ormconfig.ts",
+    "reset": "psql -U postgres -c 'drop database caf_api_node' && psql -U postgres -c 'create database caf_api_node' && yarn migrate && yarn dev",
     "postinstall": "npm run tsc"
   },
   "dependencies": {

@@ -4,7 +4,9 @@ import { User } from "../../entities/User";
 import { EmployeeRepository } from "../../repositories/EmployeeRepository";
 import { UserRepository } from "../../repositories/UserRepository";
 import { VisitantRepository } from "../../repositories/VisitantRepository";
-require("dotenv").config();
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
