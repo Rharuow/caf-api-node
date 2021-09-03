@@ -51,6 +51,7 @@
     "babel-jest": "^27.1.0",
     "factory-girl": "^5.0.4",
     "faker": "^5.5.3",
+    "faker-br": "^0.4.1",
     "jest": "^27.1.0",
     "mz": "^2.7.0",
     "supertest": "^6.1.6",

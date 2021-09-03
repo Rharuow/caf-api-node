@@ -1,8 +1,12 @@
 import { createConnection, getConnection } from "typeorm";
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 const connection = {
   async create() {
     await createConnection();
+    await getConnection().runMigrations();
   },
 
   async close() {

@@ -22,6 +22,10 @@ import { hasCheckin } from "./middlewares/hasCheckin";
 import { hasNotCheckin } from "./middlewares/hasNotCheckin";
 import { redirectAuthUser } from "./middlewares/redirectAuthUser";
 
+// require("dotenv").config({
+//   path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+// });
+
 const router = Router();
 
 const createVisitantController = new CreateVisitantController();
@@ -35,7 +39,7 @@ const getAccessCodeController = new GetAccessCodeController();
 const getAccessesController = new GetAccessesController();
 
 router.get("/", (req: Request, res: Response) =>
-  res.send("Welcome to version 2 node CAF API")
+  res.send(`Welcome to version 2 node CAF API ${process.env.NODE_ENV}`)
 );
 
 router.post(
