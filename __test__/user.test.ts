@@ -15,10 +15,14 @@ describe("Test about users context", () => {
   test("should return status 200 when create visitant done", async () => {
     const response = await request(app)
       .post("/v2/visitant")
-      .field("email", "test@mail.com")
+      .set("Accept", "application/json")
+      .set("Content-Type", "multipart/form-data")
+      .set("connection", "keep-alive")
       .field("username", "testing")
+      .field("email", "gewes44054@mom2kid.com")
       .field("cpf", "000.000.000-00")
-      .attach("avatar", "./avatar.png");
-    console.log(response.body);
+      .attach("photo", "__test__/images/avatar.png");
+
+    expect(response.status).toBe(200);
   });
 });
