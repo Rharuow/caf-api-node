@@ -28,7 +28,7 @@ const createVisitantController = new CreateVisitantController();
 const deleteUserController = new DeleteUserController();
 const createEmployeeController = new CreateEmployeeController();
 const confirmationSignupController = new ConfirmationSignupController();
-const visitantCreateSessionController = new CreateSessionController();
+const createSessionController = new CreateSessionController();
 const addCheckinController = new AddCheckinController();
 const addCheckoutController = new AddCheckoutController();
 const getAccessCodeController = new GetAccessCodeController();
@@ -60,7 +60,7 @@ router.post(
   "/auth",
   ensureParamsSessionCreate,
   redirectAuthUser,
-  visitantCreateSessionController.handle
+  createSessionController.handle
 );
 
 router.post("/checkin", hasNotCheckin, addCheckinController.handle);

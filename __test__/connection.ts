@@ -10,33 +10,26 @@ const connection = {
   },
 
   async close() {
-    await getConnection().close();
-  },
-
-  async clear() {
     const connection = getConnection();
     const entities = connection.entityMetadatas;
 
     entities.forEach(async (entity) => {
       const repository = connection.getRepository(entity.name);
+      console.log("repository = ", entity.name)
 
       await repository.query(`DELETE FROM ${entity.tableName}`);
     });
+    await getConnection().close();
   },
 };
 
 beforeAll(async () => {
   console.log("CREATE")
-  await connection.create();
-});
-
-
-beforeEach(async () => {
-  console.log("CLEAR")
-  await connection.clear();
+  await connection.create()
+  
 });
 
 afterAll(async () => {
   console.log("CLOSE")
-  await connection.close().catch(err => console.log(err));
+  await connection.close()
 });
