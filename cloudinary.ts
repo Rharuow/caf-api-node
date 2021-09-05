@@ -30,4 +30,18 @@ export = {
       }
     );
   },
+  destroy: async (imageId: string) => {
+    return new Promise<{ status: boolean; url: string }>(
+      async (resolve, reject) => {
+        cloudinary.v2.uploader.destroy(`avatar/${imageId}`, (error: any, result: any) => {
+            if (result) {
+              resolve({ status: true, url: result.secure_url });
+            } else {
+              reject({ status: false, url: error.message });
+            }
+          }
+        );
+      }
+    );
+  }
 };

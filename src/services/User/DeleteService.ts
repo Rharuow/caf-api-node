@@ -1,4 +1,5 @@
 import { getCustomRepository } from "typeorm";
+import cloudinary from "../../../cloudinary";
 import { UserRepository } from "../../repositories/UserRepository";
 
 class DeleteUserService {
@@ -8,7 +9,16 @@ class DeleteUserService {
     try {
       const user = await userRepository.findOneOrFail({ where: { email } });
 
-      return user;
+      if(!user) throw new Error("User not found")
+
+      const imageCode = user.avatar.split('/').pop().split('.')[0]
+      if(!imageCode) throw new Error("Image not found")
+      
+      const userDeleted = await userRepository.delete({email})
+
+      await cloudinary.destroy(imageCode)
+      
+      return userDeleted;
     } catch (error) {
       return error.message;
     }
