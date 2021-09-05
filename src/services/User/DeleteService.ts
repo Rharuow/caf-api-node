@@ -14,11 +14,11 @@ class DeleteUserService {
       const imageCode = user.avatar.split('/').pop().split('.')[0]
       if(!imageCode) throw new Error("Image not found")
       
-      const userDeleted = await userRepository.delete({email})
+      await userRepository.delete({email})
 
       await cloudinary.destroy(imageCode)
       
-      return userDeleted;
+      return { message: 'This user was deleted' };
     } catch (error) {
       return error.message;
     }

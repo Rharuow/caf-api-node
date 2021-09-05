@@ -7,9 +7,7 @@ class DeleteUserController {
     const deleteUserService = new DeleteUserService();
 
     try {
-      const user = (await deleteUserService.execute(req.body.email)) as {};
-
-      return res.json({ message: 'This user was deleted', ...user });
+      return res.json(await deleteUserService.execute(req.body.email));
     } catch (error) {
       return res.status(401).json({ message: error.message });
     }
