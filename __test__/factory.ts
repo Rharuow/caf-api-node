@@ -2,6 +2,7 @@ import { getCustomRepository } from "typeorm"
 import { UserRepository } from "../src/repositories/UserRepository"
 import bcrypt from "bcryptjs";
 import CreateService from "../src/services/Access/CreateService";
+import { GetAccessService } from "../src/services/Access/GetAccessService";
 
 const CreateUserWithAccess = async () => {
   const userRepository = getCustomRepository(UserRepository)
@@ -32,4 +33,14 @@ const CreateAccess = async (userId: string) => {
 
 }
 
-export {CreateUserWithAccess}
+const GetAccessActiveByUser = async () => {
+  const getAccessService = new GetAccessService()
+
+  const user = await CreateUserWithAccess()
+
+  const accessByUser = await getAccessService.execute(user.id)
+
+  return accessByUser
+}
+
+export {CreateUserWithAccess, GetAccessActiveByUser}

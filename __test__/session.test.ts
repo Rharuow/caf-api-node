@@ -6,7 +6,7 @@ import { CreateUserWithAccess } from './factory'
 
 describe("Tests to create a session with jwt", () => {
   test("Should return jwt with correctly credentials", async () => {
-    const {user} = await CreateUserWithAccess()
+    const user = await CreateUserWithAccess()
 
     console.log("email = ", user.email)
     console.log("password = ", user.password)
