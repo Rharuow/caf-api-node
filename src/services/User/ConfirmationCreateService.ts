@@ -31,7 +31,7 @@ export class ConfirmationCreateService {
         user,
       });
     } catch (err) {
-      throw new Error("Sorry, we can't confirm your signup");
+      throw new Error(`Sorry, we can't confirm your signup: ${err}`);
     }
   }
 }
