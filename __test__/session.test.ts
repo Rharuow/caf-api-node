@@ -1,26 +1,24 @@
 import request from 'supertest'
-import { getCustomRepository } from 'typeorm'
 import app from '../src/app'
-import { UserRepository } from '../src/repositories/UserRepository'
 
 import "./connection"
+import { CreateUserWithAccess } from './factory'
 
 describe("Tests to create a session with jwt", () => {
   test("Should return jwt with correctly credentials", async () => {
-    const userRepository = getCustomRepository(UserRepository)
+    const user = await CreateUserWithAccess()
 
-    const user = userRepository.create({
-      email: 'test@mail.com',
-      password: '123123123',
-      username: 'test',
-      role: 'visitant',
-      avatar: 'https://www.nerdssauros.com.br/wp-content/uploads/2021/02/avatar.jpeg',
-      confirmation_token: '3216548979846213'
-    })
+    console.log("email = ", user.email)
+    console.log("password = ", user.password)
 
-    await userRepository.save(user)
+    const response = await request(app)
+      .post('/v2/auth')
+      .send({email: user.email, password: "123123123", role: user.role})
 
-    console.log("USERS = ", user)
+    console.log(response.body)
+
+    expect(response.body).toHaveProperty("token")
+
   })
 })
 

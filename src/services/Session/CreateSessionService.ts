@@ -30,7 +30,7 @@ export class CreateSessionService {
         code: access.alphanumeric,
       };
     } catch (error) {
-      throw new Error("Sorry we can't create a session!");
+      throw new Error(error.message);
     }
   }
 }
