@@ -20,7 +20,7 @@ describe("Test about users context", () => {
       .set("Accept", "application/json")
       .set("Content-Type", "multipart/form-data")
       .set("connection", "keep-alive")
-      .field("username", "testing")
+      .field("username", "Test visitant")
       .field("email", "naxacif239@mnqlm.com")
       .field("cpf", "000.000.000-00")
       .attach("photo", "__test__/images/avatar.png");
@@ -40,7 +40,7 @@ describe("Test about users context", () => {
         role: user.role,
         password: '123123123'
       })
-    
+
     expect(response.body.text).toBe("user created with success")
   })
 
@@ -52,7 +52,7 @@ describe("Test about users context", () => {
       .set("connection", "keep-alive")
       .field("username", "Test Employee")
       .field("email", "joben44053@mom2kid.com")
-      .field("registration", "123123123")
+      .field("registration", "123123123123")
       .attach("photo", "__test__/images/avatar.png");
 
     expect(response.status).toBe(200);
