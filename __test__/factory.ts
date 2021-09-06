@@ -1,8 +1,7 @@
-import { getCustomRepository, getRepository } from "typeorm"
+import { getCustomRepository } from "typeorm"
 import { UserRepository } from "../src/repositories/UserRepository"
 import bcrypt from "bcryptjs";
 import CreateService from "../src/services/Access/CreateService";
-import { AccessRepository } from "../src/repositories/AccessRepository";
 
 const CreateUserWithAccess = async () => {
   const userRepository = getCustomRepository(UserRepository)
@@ -22,18 +21,14 @@ const CreateUserWithAccess = async () => {
 
   await CreateAccess(user.id)
 
-  const accessRepository = getRepository(AccessRepository)
-
-  const access = await accessRepository.findOne({where: {user_id: user.id}})
-  
-  return {user, access}
+  return user
 }
 
 const CreateAccess = async (userId: string) => {
 
   const createAccessService = new CreateService()
 
-  const access = await createAccessService.execute(userId)
+  await createAccessService.execute(userId)
 
 }
 
