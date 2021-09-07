@@ -39,8 +39,6 @@ describe("Tests to get access's resources", () => {
 
     const access = await accessRepository.findOne({where: {alphanumeric: '000000000000'}})
 
-    console.log(access.is_active)
-
     expect(access).toHaveProperty("is_active", true)
   })
 })
