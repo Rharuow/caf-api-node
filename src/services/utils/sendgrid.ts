@@ -61,14 +61,8 @@ const sendCodeAccess = async (data: IData) => {
             <h2>${data.code}</h2>
             `,
   };
-  sgMail
+  await sgMail
     .send(msg)
-    .then(() => {
-      console.log("Code Access sent");
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 };
 
 export { sendConfirmationToken, sendCodeAccess };

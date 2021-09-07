@@ -17,7 +17,5 @@ afterAll(async () => {
 
 afterEach(async () => {
   const userRepository = getCustomRepository(UserRepository)
-
   await userRepository.delete({email: "test@mail.com"})
-
 })
