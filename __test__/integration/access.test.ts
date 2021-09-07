@@ -1,8 +1,8 @@
 import request from "supertest";
-import app from "../src/app";
+import app from "../../src/app";
 
-import './connection'
-import { GetAccessActiveByUser } from "./factory";
+import '../connection'
+import { GetAccessActiveByUser } from "../factory";
 
 
 describe("Tests to verify checkin and checkout", () => {

@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "integration_test": "NODE_ENV=test jest __test__/integration/connection.test.ts && NODE_ENV=test jest __test__/integration/session.test.ts && NODE_ENV=test jest __test__/integration/access.test.ts && NODE_ENV=test jest __test__/integration/user.test.ts",
+    "unity_test": "NODE_ENV=test jest __test__/unitary/user.test.ts && NODE_ENV=test jest __test__/unitary/visitant.test.ts && NODE_ENV=test jest __test__/unitary/employee.test.ts && NODE_ENV=test jest __test__/unitary/access.test.ts",
     "migrate": " ts-node ./node_modules/typeorm/cli.js migration:run",
     "dev": " tsnd --respawn src/server.ts",
     "tsc": "tsc",

@@ -1,10 +1,10 @@
 import request from "supertest";
 import { getCustomRepository } from "typeorm";
 
-import app from "../src/app";
-import { UserRepository } from "../src/repositories/UserRepository";
+import app from "../../src/app";
+import { UserRepository } from "../../src/repositories/UserRepository";
 
-import "./connection";
+import "../connection";
 
 describe("Test about users context", () => {
   test("should return status 400 when visitant´s credentials aren't sent correctly", async () => {
