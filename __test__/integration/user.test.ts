@@ -29,20 +29,20 @@ describe("Test about users context", () => {
   });
 
   test("should return text 'user created with success' when confirmation password has done with success", async () => {
-    const userRepository = getCustomRepository(UserRepository)
+    const userRepository = getCustomRepository(UserRepository);
 
-    const user = await userRepository.findOneOrFail({where: {email: 'naxacif239@mnqlm.com'}})
+    const user = await userRepository.findOneOrFail({
+      where: { email: "naxacif239@mnqlm.com" },
+    });
 
-    const response = await request(app)
-      .post('/v2/confirmation')
-      .send({
-        token: user.confirmation_token,
-        role: user.role,
-        password: '123123123'
-      })
+    const response = await request(app).post("/v2/confirmation").send({
+      token: user.confirmation_token,
+      role: user.role,
+      password: "123123123",
+    });
 
-    expect(response.body.text).toBe("user created with success")
-  })
+    expect(response.body.text).toBe("user created with success");
+  });
 
   test("should return status 200 when create employee done", async () => {
     const response = await request(app)
@@ -59,18 +59,18 @@ describe("Test about users context", () => {
   });
 
   test("should return text 'user created with success' when confirmation password has done with success", async () => {
-    const userRepository = getCustomRepository(UserRepository)
+    const userRepository = getCustomRepository(UserRepository);
 
-    const user = await userRepository.findOneOrFail({where: {email: 'joben44053@mom2kid.com'}})
+    const user = await userRepository.findOneOrFail({
+      where: { email: "joben44053@mom2kid.com" },
+    });
 
-    const response = await request(app)
-      .post('/v2/confirmation')
-      .send({
-        token: user.confirmation_token,
-        role: user.role,
-        password: '123123123'
-      })
-    
-    expect(response.body.text).toBe("user created with success")
-  })
+    const response = await request(app).post("/v2/confirmation").send({
+      token: user.confirmation_token,
+      role: user.role,
+      password: "123123123",
+    });
+
+    expect(response.body.text).toBe("user created with success");
+  });
 });
