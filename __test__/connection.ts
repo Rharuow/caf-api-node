@@ -9,7 +9,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await request(app).delete("/v2/user").send({ email: "naxacif239@mnqlm.com" });
+  await request(app).delete("/v2/user").send({ email: "pebeli9111@silbarts.com" });
   await request(app)
     .delete("/v2/user")
     .send({ email: "joben44053@mom2kid.com" });
