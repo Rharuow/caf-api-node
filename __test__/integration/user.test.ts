@@ -21,7 +21,7 @@ describe("Test about users context", () => {
       .set("Content-Type", "multipart/form-data")
       .set("connection", "keep-alive")
       .field("username", "Test visitant")
-      .field("email", "naxacif239@mnqlm.com")
+      .field("email", "pebeli9111@silbarts.com")
       .field("cpf", "000.000.000-00")
       .attach("photo", "__test__/images/avatar.png");
 
@@ -32,7 +32,7 @@ describe("Test about users context", () => {
     const userRepository = getCustomRepository(UserRepository);
 
     const user = await userRepository.findOneOrFail({
-      where: { email: "naxacif239@mnqlm.com" },
+      where: { email: "pebeli9111@silbarts.com" },
     });
 
     const response = await request(app).post("/v2/confirmation").send({
