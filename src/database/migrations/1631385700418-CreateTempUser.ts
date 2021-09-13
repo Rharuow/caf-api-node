@@ -37,6 +37,11 @@ export class CreateTempUser1631385700418 implements MigrationInterface {
           enum: ["visitant", "employee"],
         },
         {
+          name: "confirmation_token",
+          type: "varchar",
+          isUnique: true,
+        },
+        {
           name: "created_at",
           type: "timestamp",
           default: "now()",

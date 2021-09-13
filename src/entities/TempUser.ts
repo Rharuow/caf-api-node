@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
-
+import { v4 as uuid } from "uuid";
 
 @Entity('TempUser')
 export class TempUser {
@@ -23,10 +23,17 @@ export class TempUser {
 
   @Column()
   role: string;
+
+  @Column()
+  confirmation_token: string
   
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  constructor() {
+    if (!this.id) this.id = uuid();
+  }
 }

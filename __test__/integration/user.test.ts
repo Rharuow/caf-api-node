@@ -4,6 +4,8 @@ import { getCustomRepository } from "typeorm";
 import app from "../../src/app";
 import { UserRepository } from "../../src/repositories/UserRepository";
 
+import data from '../util'
+
 import "../connection";
 
 describe("Test about users context", () => {
@@ -20,10 +22,10 @@ describe("Test about users context", () => {
       .set("Accept", "application/json")
       .set("Content-Type", "multipart/form-data")
       .set("connection", "keep-alive")
-      .field("username", "Test visitant")
-      .field("email", "pebeli9111@silbarts.com")
-      .field("cpf", "000.000.000-00")
-      .attach("photo", "__test__/images/avatar.png");
+      .field("username", data.visitant.username)
+      .field("email", data.visitant.email)
+      .field("cpf", data.visitant.cpf)
+      .attach("photo", data.avatar);
 
     expect(response.status).toBe(200);
   });
@@ -32,7 +34,7 @@ describe("Test about users context", () => {
     const userRepository = getCustomRepository(UserRepository);
 
     const user = await userRepository.findOneOrFail({
-      where: { email: "pebeli9111@silbarts.com" },
+      where: { email: data.visitant.email },
     });
 
     const response = await request(app).post("/v2/confirmation").send({
@@ -50,10 +52,12 @@ describe("Test about users context", () => {
       .set("Accept", "application/json")
       .set("Content-Type", "multipart/form-data")
       .set("connection", "keep-alive")
-      .field("username", "Test Employee")
-      .field("email", "joben44053@mom2kid.com")
-      .field("registration", "123123123123")
-      .attach("photo", "__test__/images/avatar.png");
+      .field("username", data.employee.username)
+      .field("email", data.employee.email)
+      .field("registration", data.employee.registration)
+      .attach("photo", data.avatar);
+
+    console.log(response.body)
 
     expect(response.status).toBe(200);
   });
@@ -62,7 +66,7 @@ describe("Test about users context", () => {
     const userRepository = getCustomRepository(UserRepository);
 
     const user = await userRepository.findOneOrFail({
-      where: { email: "joben44053@mom2kid.com" },
+      where: { email: data.employee.email },
     });
 
     const response = await request(app).post("/v2/confirmation").send({
