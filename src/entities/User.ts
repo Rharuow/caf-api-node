@@ -24,9 +24,6 @@ export class User {
   password: string;
 
   @Column()
-  confirmation_token: string;
-
-  @Column()
   avatar: string;
 
   @Column()

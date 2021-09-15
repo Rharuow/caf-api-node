@@ -1,9 +1,14 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, QueryFailedError } from "typeorm";
 
 import { TempUserRepository } from "../../repositories/TempUserRepository";
 import { IUserCreateService } from "../../../interfaces";
 import cloudinary from "../../../cloudinary";
 import { UserRepository } from "../../repositories/UserRepository";
+import { validateCpf, validateEmail } from "../utils/validations";
+import { sendConfirmationToken } from "../utils/sendgrid";
+import { VisitantRepository } from "../../repositories/VisitantRepository";
+import { EmployeeRepository } from "../../repositories/EmployeeRepository";
+
 
 interface ITempUser {
   cpf?: string;
@@ -28,10 +33,24 @@ export class CreateTempUserService {
   async execute({ cpf, registration, user }: ITempUser) {
     const tempUserRepository = getCustomRepository(TempUserRepository)
     const userRepository = getCustomRepository(UserRepository)
+    const visitantRepository = getCustomRepository(VisitantRepository)
+    const employeeRepository = getCustomRepository(EmployeeRepository)
 
-    const userVerified = await userRepository.find({where: { email: user.email}})
+    const validateField = user.role.includes('visitant') ? validateCpf(cpf) : registration.length === 12
 
-    if(userVerified.length > 0) throw new Error("User already exists")
+    if(!validateField) throw new Error(`${user.role.includes('visitant') ? 'Cpf' : 'Registration'} field validation failed`)
+
+    const emailValidation = validateEmail(user.email)
+
+    if(!emailValidation) throw new Error("Email validation failed")
+
+    if (user.username.length < 3 || user.username.length > 20) throw new Error("username field invalid!")
+
+    const emailVerified = await userRepository.find({where: { email: user.email}})
+    const usernameVerified = await userRepository.find({where: { username: user.username}})
+    const uniqueRegister = user.role.includes('visitant') ? await visitantRepository.find({where: { cpf }}) : await employeeRepository.find({where: { registration }}) 
+
+    if(emailVerified.length > 0 || usernameVerified.length > 0 || uniqueRegister.length > 0) throw new Error("User already exists")
 
     const confirmation_token = this.generateConfirmationToken();
 
@@ -41,12 +60,42 @@ export class CreateTempUserService {
       avatar: avatarUploaded.url,
       cpf: user.role.includes('visitant') ? cpf : '',
       registration: user.role.includes('employee') ? registration : '',
-      role: user.role, 
+      role: user.role,
       username: user.username,
       email: user.email,
       confirmation_token
     })
+    try {
 
-    return tempUser
+      const tempUserSaved = await tempUserRepository.save(tempUser)
+      
+      if (tempUserSaved) {
+        await sendConfirmationToken({
+          code: confirmation_token,
+          email: user.email,
+          role: user.role,
+          username: user.username,
+          user: tempUser
+        });
+      }
+
+      return {
+        ...tempUser,
+        response: {
+          status: 200,
+          message: "User saved successfully",
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      if (error instanceof QueryFailedError)
+        return {
+          ...user,
+          response: {
+            status: 400,
+            message: "Sorry, we can't create a user!",
+          },
+        };
+    }
   }
 }

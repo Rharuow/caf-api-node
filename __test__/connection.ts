@@ -11,10 +11,14 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await request(app).delete("/v2/user").send({ email: data.employee.email });
-  await request(app).delete("/v2/user").send({ email: data.visitant.email });
+  const delete1 = await request(app).delete("/v2/user").send({ email: data.employee.email });
+  const delete2 = await request(app).delete("/v2/user").send({ email: data.visitant.email });
   const userRepository = getCustomRepository(UserRepository);
-  await userRepository.delete({ email: "test@mail.com" });
+  const delete3 = await userRepository.delete({ email: "test@mail.com" });
+
+  console.log("Delete 1 = ", delete1.body)
+  console.log("Delete 2 = ", delete2.body)
+  console.log("Delete 3 = ", delete3)
 
   await connection.close();
 });

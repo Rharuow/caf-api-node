@@ -15,12 +15,6 @@ describe("Tests to get users resources", () => {
     expect(user).toHaveProperty("email", "test@mail.com");
   });
 
-  test("Should return user's confirmation_token", async () => {
-    const user = await createUser();
-
-    expect(user).toHaveProperty("confirmation_token", "123123123");
-  });
-
   test("Should return user's avatar", async () => {
     const user = await createUser();
 
