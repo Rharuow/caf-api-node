@@ -35,8 +35,10 @@ export = {
       async (resolve, reject) => {
         cloudinary.v2.uploader.destroy(`avatar/${imageId}`, (error: any, result: any) => {
             if (result) {
+              console.log(`Image ${imageId} deleted`)
               resolve({ status: true, url: result.secure_url });
             } else {
+              console.log(`Image ${imageId} not deleted`)
               reject({ status: false, url: error.message });
             }
           }

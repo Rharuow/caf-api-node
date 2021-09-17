@@ -3,6 +3,7 @@ export interface IUser {
   email: string;
   avatar: string;
   role: string;
+  password: string
 }
 
 export interface IUserCreateService {

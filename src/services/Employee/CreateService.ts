@@ -1,11 +1,12 @@
 import { getCustomRepository } from "typeorm";
 import { EmployeeRepository } from "../../repositories/EmployeeRepository";
-import UserCreateService from "../User/CreateService";
 
-import { IUserCreateService } from "../../../interfaces";
 interface IEmployee {
   registration: string;
-  user: IUserCreateService;
+  user: {
+    id: string,
+    email: string
+  };
 }
 
 class CreateService {
@@ -15,21 +16,9 @@ class CreateService {
 
     const employeeRepository = getCustomRepository(EmployeeRepository);
 
-    const userCreateService = new UserCreateService();
-
-    const userCreated = await userCreateService.execute({
-      username: user.username,
-      avatar: user.avatar,
-      email: user.email,
-      role: user.role,
-    });
-
-    if (userCreated.response.status != 200)
-      throw new Error(userCreated.response.message);
-
     const employee = employeeRepository.create({
       registration,
-      user_id: userCreated.id,
+      user_id: user.id,
     });
 
     try {
@@ -37,7 +26,7 @@ class CreateService {
 
       return {
         user: {
-          email: userCreated.email,
+          email: user.email,
         },
       };
     } catch (error) {

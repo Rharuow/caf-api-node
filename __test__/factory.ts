@@ -1,34 +1,28 @@
 import { getCustomRepository } from "typeorm";
-import { UserRepository } from "../src/repositories/UserRepository";
 import bcrypt from "bcryptjs";
+
 import CreateService from "../src/services/Access/CreateService";
 import { GetAccessService } from "../src/services/Access/GetAccessService";
 import { VisitantRepository } from "../src/repositories/VisitantRepository";
 import { EmployeeRepository } from "../src/repositories/EmployeeRepository";
 import { AccessRepository } from "../src/repositories/AccessRepository";
+import CreateUserService from "../src/services/User/CreateService";
+import { UserRepository } from "../src/repositories/UserRepository";
 
 const CreateUserWithAccess = async (
   password = "123123123",
+  username = 'Visitante test',
   email = "test@mail.com",
   role = "visitant",
   avatar = "https://www.nerdssauros.com.br/wp-content/uploads/2021/02/avatar.jpeg"
 ) => {
-  const userRepository = getCustomRepository(UserRepository);
+  
+  const userRepository = getCustomRepository(UserRepository)
 
-  const password_hashed = await bcrypt.hash(password, 10);
+  const user = userRepository.create({username, role, password: await bcrypt.hash(password, 10), email, avatar})
+  const userSaved = await userRepository.save(user)
 
-  const user = userRepository.create({
-    email,
-    password: password_hashed,
-    username: "test",
-    role,
-    avatar,
-    confirmation_token: "3216548979846213",
-  });
-
-  await userRepository.save(user);
-
-  await CreateAccess(user.id);
+  await CreateAccess(userSaved.id)
 
   return user;
 };
@@ -54,19 +48,17 @@ const createUser = async (
   username: string = "test",
   role: string = "visitant",
   email: string = "test@mail.com",
-  confirmation_token: string = "123123123"
+  password: string = "123123123"
 ) => {
-  const userRespository = getCustomRepository(UserRepository);
+  const createUserService = new CreateUserService()
 
-  const user = userRespository.create({
+  const user = await createUserService.execute({
     avatar,
     email,
-    role,
     username,
-    confirmation_token,
-  });
-
-  await userRespository.save(user);
+    role,
+    password: await bcrypt.hash(password, 10)
+  })
 
   return user;
 };

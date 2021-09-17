@@ -1,36 +1,19 @@
 import { getCustomRepository, QueryFailedError } from "typeorm";
 import { UserRepository } from "../../repositories/UserRepository";
-import { sendConfirmationToken } from "../utils/sendgrid";
 import { validateEmail } from "../utils/validations";
 
-import { IUserCreateService } from "../../../interfaces";
-import cloudinary from "../../../cloudinary";
+import { IUser } from "../../../interfaces";
 
 class CreateUserService {
-  private generateConfirmationToken(): string {
-    let result = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < 28; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
-  async execute({ avatar, email, username, role }: IUserCreateService) {
+  async execute({ avatar, email, username, role, password }: IUser) {
     const userRepository = getCustomRepository(UserRepository);
 
-    const confirmation_token = this.generateConfirmationToken();
-
-    const avatarUploaded = await cloudinary.upload(avatar);
-
     const user = userRepository.create({
-      avatar: avatarUploaded.url,
+      avatar,
       email,
       username,
-      confirmation_token,
       role,
+      password,
     });
 
     if (!validateEmail(email))
@@ -54,17 +37,7 @@ class CreateUserService {
       };
 
     try {
-      const userSaved = await userRepository.save(user);
-
-      if (userSaved) {
-        await sendConfirmationToken({
-          code: confirmation_token,
-          email,
-          role,
-          username,
-          user,
-        });
-      }
+      await userRepository.save(user);
 
       return {
         ...user,

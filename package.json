@@ -16,6 +16,7 @@
     "start": "node dist/src/server.js",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js --config ormconfig.ts",
     "reset": "psql -U postgres -c 'drop database caf_api_node' && psql -U postgres -c 'create database caf_api_node' && yarn migrate && yarn dev",
+    "reset_test": "psql -U postgres -c 'drop database caf_api_node_test' && psql -U postgres -c 'create database caf_api_node_test' && yarn migrate",
     "postinstall": "npm run tsc"
   },
   "dependencies": {
