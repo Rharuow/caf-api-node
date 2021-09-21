@@ -1,23 +1,25 @@
 import { Request, Response } from "express";
-import { GetCheckinsService } from "../../services/Checkin/GetCheckinsService";
-import { GetCheckoutsServices } from "../../services/Checkout/GetCheckoutsService";
+import { GetAccessesService } from "../../services/Access/GetAccessesService";
 
 export class GetAccessesController {
   async handle(req: Request, res: Response) {
     const userID = req.headers.decodedSessionUserId as string;
+    const { page, orderBy } = req.query as {
+      page: string;
+      orderBy?: { checkin: string };
+    };
 
-    const getCheckinsService = new GetCheckinsService();
-
-    const getCheckoutService = new GetCheckoutsServices();
+    const getAccessesService = new GetAccessesService();
 
     try {
-      const accessesCheckouts = await getCheckoutService.execute(userID);
-
-      const accessesCheckins = await getCheckinsService.execute(userID);
+      const accesses = await getAccessesService.execute(
+        userID,
+        parseInt(page),
+        orderBy && orderBy
+      );
 
       return res.json({
-        checkins: accessesCheckins,
-        checkouts: accessesCheckouts,
+        accesses,
       });
     } catch (error) {
       throw new Error(

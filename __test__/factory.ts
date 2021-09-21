@@ -11,18 +11,23 @@ import { UserRepository } from "../src/repositories/UserRepository";
 
 const CreateUserWithAccess = async (
   password = "123123123",
-  username = 'Visitante test',
+  username = "Visitante test",
   email = "test@mail.com",
   role = "visitant",
   avatar = "https://www.nerdssauros.com.br/wp-content/uploads/2021/02/avatar.jpeg"
 ) => {
-  
-  const userRepository = getCustomRepository(UserRepository)
+  const userRepository = getCustomRepository(UserRepository);
 
-  const user = userRepository.create({username, role, password: await bcrypt.hash(password, 10), email, avatar})
-  const userSaved = await userRepository.save(user)
+  const user = userRepository.create({
+    username,
+    role,
+    password: await bcrypt.hash(password, 10),
+    email,
+    avatar,
+  });
+  const userSaved = await userRepository.save(user);
 
-  await CreateAccess(userSaved.id)
+  await CreateAccess(userSaved.id);
 
   return user;
 };
@@ -50,15 +55,15 @@ const createUser = async (
   email: string = "test@mail.com",
   password: string = "123123123"
 ) => {
-  const createUserService = new CreateUserService()
+  const createUserService = new CreateUserService();
 
   const user = await createUserService.execute({
     avatar,
     email,
     username,
     role,
-    password: await bcrypt.hash(password, 10)
-  })
+    password: await bcrypt.hash(password, 10),
+  });
 
   return user;
 };
