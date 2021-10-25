@@ -1,6 +1,6 @@
 # Introdution
 
-This project is an API to feed frontend application developed to supply TURN-21 demands. This demand was a sistem that to make access control both visitants and employees.
+This project is an API to feed frontend application developed to supply TRTRN-21 demands. This demand was a sistem that to make access control both visitants and employees.
 
 # Why was developed?
 
